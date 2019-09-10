@@ -1,0 +1,10 @@
+@import 'variables';
+
+body {
+  font-size: 18px;
+  font-family: $font;
+  background-color: $background-color;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}

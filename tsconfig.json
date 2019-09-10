@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "rootDir": "./WebViewExample/src/",
+    "outDir": "./out/Debug/x64/WebViewExample/src/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

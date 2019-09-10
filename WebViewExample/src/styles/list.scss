@@ -1,0 +1,37 @@
+@import 'variables';
+
+#list {
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .item {
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        font-size: 1em;
+        width: 200px;
+        height: 200px;
+        border-radius: 6px;
+        margin: 20px;
+        overflow: hidden;
+        border: 3px solid white;
+        background-color: black;
+        .title {
+            color: white;
+            background-color: $banner-color;
+            font-size: 1.5em;
+            padding: 6px 13px;
+        }
+        .content {
+            background-image: url(https://edgetipscdn.microsoft.com/insider-site/images/logo-dev.c8d75c3b.png);
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-origin: border-box;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    }
+}

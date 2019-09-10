@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{65342093-6549-4BFD-906B-E874F2359EF2}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>WebViewExample</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>f:\git\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>F:\git\Edge\src\out\$(Configuration)_x86\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\git\Edge\src\out\$(Configuration)_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>f:\git\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x64\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>F:\git\Edge\src\out\$(Configuration)_x64\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\git\Edge\src\out\$(Configuration)_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <Target Name="FullBuild" DependsOnTargets="Build">
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+      <WebViewDep Include="animation.dll" />
+      <WebViewDep Include="boringssl.dll" />
+      <WebViewDep Include="cc_paint.dll" />
+      <WebViewDep Include="chromium_sqlite3.dll" />
+      <WebViewDep Include="codec.dll" />
+      <WebViewDep Include="color_space.dll" />
+      <WebViewDep Include="color_utils.dll" />
+      <WebViewDep Include="crcrypto.dll" />
+      <WebViewDep Include="freetype_harfbuzz.dll" />
+      <WebViewDep Include="geometry_skia.dll" />
+      <WebViewDep Include="gesture_detection.dll" />
+      <WebViewDep Include="icui18n.dll" />
+      <WebViewDep Include="ipc.dll" />
+      <WebViewDep Include="mojo_core_embedder_internal.dll" />
+      <WebViewDep Include="platform.dll" />
+      <WebViewDep Include="protobuf_lite.dll" />
+      <WebViewDep Include="range.dll" />
+      <WebViewDep Include="service_manager_cpp.dll" />
+      <WebViewDep Include="service_manager_cpp_types.dll" />
+      <WebViewDep Include="skia.dll" />
+      <WebViewDep Include="system_media_controls.dll" />
+      <WebViewDep Include="ui_base_clipboard.dll" />
+      <WebViewDep Include="ui_base_clipboard_types.dll" />
+      <WebViewDep Include="ui_base_features.dll" />
+      <WebViewDep Include="ui_data_pack.dll" />
+      <WebViewDep Include="ui_display.dll" />
+      <WebViewDep Include="url_ipc.dll" />
+      <WebViewDep Include="base.dll" />
+      <WebViewDep Include="ui_base.dll" />
+      <WebViewDep Include="gfx.dll" />
+      <WebViewDep Include="geometry.dll" />
+      <WebViewDep Include="message_support.dll" />
+      <WebViewDep Include="mojo_public_system_cpp.dll" />
+      <WebViewDep Include="mojo_public_system.dll" />
+      <WebViewDep Include="mojo_cpp_platform.dll" />
+      <WebViewDep Include="events_base.dll" />
+      <WebViewDep Include="url_lib.dll" />
+      <WebViewDep Include="chrome_features.dll" />
+      <WebViewDep Include="bindings.dll" />
+      <WebViewDep Include="bindings_base.dll" />
+      <WebViewDep Include="mojo_mojom_bindings.dll" />
+      <WebViewDep Include="mojo_mojom_bindings_shared.dll" />
+      <WebViewDep Include="mojo_base_mojom_shared.dll" />
+      <WebViewDep Include="net.dll" />
+      <WebViewDep Include="mojo_base_mojom.dll" />
+      <WebViewDep Include="mojo_base_lib.dll" />
+      <WebViewDep Include="mojo_base_shared_typemap_traits.dll" />
+      <WebViewDep Include="base_i18n.dll" />
+      <WebViewDep Include="network_cpp_base.dll" />
+      <WebViewDep Include="metrics_cpp.dll" />
+      <WebViewDep Include="events.dll" />
+      <WebViewDep Include="mojo_core_embedder.dll" />
+      <WebViewDep Include="libc++.dll" />
+      <WebViewDep Include="sql.dll" />
+      <WebViewDep Include="prefs.dll" />
+      <WebViewDep Include="zlib.dll" />
+      <WebViewDep Include="icuuc.dll" />
+      <WebViewDep Include="oneds.dll" />
+      <WebViewDep Include="telclient.dll" />
+    </ItemGroup>
+    <!--
+     <Copy SourceFiles="F:\git\Edge\src\out\$(Configuration)_$(Platform)\WebView2Loader.dll" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+     <Copy SourceFiles="@(WebViewDep->'F:\git\Edge\src\out\$(Configuration)_$(Platform)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+     -->
+     <Copy SourceFiles="F:\git\Edge\src\out\release_$(Platform)\WebView2Loader.dll" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+     <Copy SourceFiles="@(Content)"
+        DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')"/>
+  </Target>
+  <PropertyGroup>
+    <IntDir>..\out\$(Configuration)\$(Platform)\Intermediate\$(MSBuildProjectName)\</IntDir>
+    <OutDir>..\out\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</OutDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

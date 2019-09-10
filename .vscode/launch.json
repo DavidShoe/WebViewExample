@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug App for C++ debugging",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "debugServer": 4712,
+            "type": "edge",
+            "request": "launch",
+            "name": "Debug App for Script debugging",
+            "urlFilter": "*index.html",
+            "webRoot": "${workspaceFolder}",
+            "pathMapping": {
+                "/git/jalissia/WebViewExample/out/Debug/x64": "${workspaceFolder}"
+            },
+            "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "isWebView2": true
+        },
+    ]
+}
