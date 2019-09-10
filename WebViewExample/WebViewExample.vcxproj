@@ -102,72 +102,13 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Target Name="FullBuild" DependsOnTargets="Build">
-    <ItemGroup Condition="'$(Configuration)'=='Debug'">
-      <WebViewDep Include="animation.dll" />
-      <WebViewDep Include="boringssl.dll" />
-      <WebViewDep Include="cc_paint.dll" />
-      <WebViewDep Include="chromium_sqlite3.dll" />
-      <WebViewDep Include="codec.dll" />
-      <WebViewDep Include="color_space.dll" />
-      <WebViewDep Include="color_utils.dll" />
-      <WebViewDep Include="crcrypto.dll" />
-      <WebViewDep Include="freetype_harfbuzz.dll" />
-      <WebViewDep Include="geometry_skia.dll" />
-      <WebViewDep Include="gesture_detection.dll" />
-      <WebViewDep Include="icui18n.dll" />
-      <WebViewDep Include="ipc.dll" />
-      <WebViewDep Include="mojo_core_embedder_internal.dll" />
-      <WebViewDep Include="platform.dll" />
-      <WebViewDep Include="protobuf_lite.dll" />
-      <WebViewDep Include="range.dll" />
-      <WebViewDep Include="service_manager_cpp.dll" />
-      <WebViewDep Include="service_manager_cpp_types.dll" />
-      <WebViewDep Include="skia.dll" />
-      <WebViewDep Include="system_media_controls.dll" />
-      <WebViewDep Include="ui_base_clipboard.dll" />
-      <WebViewDep Include="ui_base_clipboard_types.dll" />
-      <WebViewDep Include="ui_base_features.dll" />
-      <WebViewDep Include="ui_data_pack.dll" />
-      <WebViewDep Include="ui_display.dll" />
-      <WebViewDep Include="url_ipc.dll" />
-      <WebViewDep Include="base.dll" />
-      <WebViewDep Include="ui_base.dll" />
-      <WebViewDep Include="gfx.dll" />
-      <WebViewDep Include="geometry.dll" />
-      <WebViewDep Include="message_support.dll" />
-      <WebViewDep Include="mojo_public_system_cpp.dll" />
-      <WebViewDep Include="mojo_public_system.dll" />
-      <WebViewDep Include="mojo_cpp_platform.dll" />
-      <WebViewDep Include="events_base.dll" />
-      <WebViewDep Include="url_lib.dll" />
-      <WebViewDep Include="chrome_features.dll" />
-      <WebViewDep Include="bindings.dll" />
-      <WebViewDep Include="bindings_base.dll" />
-      <WebViewDep Include="mojo_mojom_bindings.dll" />
-      <WebViewDep Include="mojo_mojom_bindings_shared.dll" />
-      <WebViewDep Include="mojo_base_mojom_shared.dll" />
-      <WebViewDep Include="net.dll" />
-      <WebViewDep Include="mojo_base_mojom.dll" />
-      <WebViewDep Include="mojo_base_lib.dll" />
-      <WebViewDep Include="mojo_base_shared_typemap_traits.dll" />
-      <WebViewDep Include="base_i18n.dll" />
-      <WebViewDep Include="network_cpp_base.dll" />
-      <WebViewDep Include="metrics_cpp.dll" />
-      <WebViewDep Include="events.dll" />
-      <WebViewDep Include="mojo_core_embedder.dll" />
-      <WebViewDep Include="libc++.dll" />
-      <WebViewDep Include="sql.dll" />
-      <WebViewDep Include="prefs.dll" />
-      <WebViewDep Include="zlib.dll" />
-      <WebViewDep Include="icuuc.dll" />
-      <WebViewDep Include="oneds.dll" />
-      <WebViewDep Include="telclient.dll" />
+    <ItemGroup>
+      <WebView2Dependency Include="WebView2Loader.dll" />
     </ItemGroup>
-    <!--
-     <Copy SourceFiles="F:\git\Edge\src\out\$(Configuration)_$(Platform)\WebView2Loader.dll" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
-     <Copy SourceFiles="@(WebViewDep->'F:\git\Edge\src\out\$(Configuration)_$(Platform)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
-     -->
-     <Copy SourceFiles="F:\git\Edge\src\out\release_$(Platform)\WebView2Loader.dll" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+      <WebView2Dependency Include="icuuc.dll" />
+    </ItemGroup>
+     <Copy SourceFiles="@(WebView2Dependency->'F:\git\Edge\src\out\$(Configuration)_$(Platform)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
      <Copy SourceFiles="@(Content)"
         DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')"/>
   </Target>

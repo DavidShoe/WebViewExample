@@ -12,7 +12,12 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "path",
+                    "value": "%path%;F:\\git\\Edge\\src\\out\\debug_x64"
+                }
+            ],
             "externalConsole": false
         },
         {
