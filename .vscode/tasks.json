@@ -25,6 +25,7 @@
                 // Ask msbuild to generate full paths for file names.
                 "/property:GenerateFullPaths=true",
                 "/property:Configuration=Debug",
+                "/property:Platform=x64",
                 "/t:FullBuild"
             ],
             "presentation": {

@@ -25,6 +25,23 @@
     <RootNamespace>WebViewExample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
+  <PropertyGroup>
+      <EdgePlatform>$(Platform)</EdgePlatform>
+      <EdgePlatform Condition="'$(Platform)'=='Win32'">x86</EdgePlatform>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Fix path so that it points to your nuget package installation -->
+    <WebView2Path>F:\git\jalissia\WebViewExample\packages\Microsoft.Web.WebView2.0.8.270\build\native</WebView2Path>
+    <WebView2Include>$(WebView2Path)\include</WebView2Include>
+    <WebView2Lib>$(WebView2Path)\$(EdgePlatform)</WebView2Lib>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Uncomment for Edge private build of WebView -->
+    <!--
+    <WebView2Include>F:\git\Edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</WebView2Include>
+    <WebView2Lib>F:\git\Edge\src\out\$(Configuration)_$(EdgePlatform)</WebView2Lib>
+     -->
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,21 +95,16 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>f:\git\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>F:\git\Edge\src\out\$(Configuration)_x86\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\git\Edge\src\out\$(Configuration)_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+  <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>f:\git\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x64\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WebView2Include)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>F:\git\Edge\src\out\$(Configuration)_x64\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>F:\git\Edge\src\out\$(Configuration)_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(WebView2Lib)\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(WebView2Lib)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -108,7 +120,7 @@
     <ItemGroup Condition="'$(Configuration)'=='Debug'">
       <WebView2Dependency Include="icuuc.dll" />
     </ItemGroup>
-     <Copy SourceFiles="@(WebView2Dependency->'F:\git\Edge\src\out\$(Configuration)_$(Platform)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+     <Copy SourceFiles="@(WebView2Dependency->'$(WebView2Lib)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
      <Copy SourceFiles="@(Content)"
         DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')"/>
   </Target>
