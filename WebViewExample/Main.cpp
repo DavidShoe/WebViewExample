@@ -5,6 +5,7 @@
 #include <tchar.h>
 #include <wrl.h>
 #include <algorithm>
+#include <vector>
 #include "WebView2.h"
 
 using namespace Microsoft::WRL;
@@ -15,14 +16,17 @@ static wchar_t szTitle[] = L"WebView sample";
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HINSTANCE hInst;
-static ComPtr<IWebView2WebView> webviewWindow;
+std::vector<ComPtr<IWebView2WebView>> m_webviewWindows;
+HWND m_hwndMain;
+std::wstring m_url;
+DWORD IDE_CREATE = 102;
+DWORD m_webviewTop = 25;
 
 int CALLBACK WinMain(
     _In_ HINSTANCE hInstance,
     _In_ HINSTANCE hPrevInstance,
-    _In_ LPSTR     lpCmdLine,
-    _In_ int       nCmdShow
-)
+    _In_ LPSTR lpCmdLine,
+    _In_ int nCmdShow)
 {
     // Create the desktop window class
     WNDCLASSEX wcex;
@@ -47,7 +51,7 @@ int CALLBACK WinMain(
     hInst = hInstance;
 
     // Create the window
-    HWND hWnd = CreateWindow(
+    m_hwndMain = CreateWindow(
         szWindowClass,
         szTitle,
         WS_OVERLAPPEDWINDOW,
@@ -56,17 +60,16 @@ int CALLBACK WinMain(
         NULL,
         NULL,
         hInstance,
-        NULL
-    );
+        NULL);
 
-    if (!hWnd)
+    if (!m_hwndMain)
     {
         return E_FAIL;
     }
 
     // Show the window
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
+    ShowWindow(m_hwndMain, nCmdShow);
+    UpdateWindow(m_hwndMain);
 
     // Get the url that we want to display in the webview from our current path
     wchar_t system_buffer[MAX_PATH];
@@ -81,42 +84,16 @@ int CALLBACK WinMain(
     std::wstring url(L"file:///");
     url += path;
     url += L"/src/index.html";
+    m_url = url;
 
     // Create a single WebView within the parent window
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
-    // Locate the browser and set up the environment for WebView
-    CreateWebView2EnvironmentWithDetails(L"F:\\git\\Edge\\src\\out\\debug_x64", nullptr, nullptr,
-        Callback<IWebView2CreateWebView2EnvironmentCompletedHandler>(
-            [hWnd, url](HRESULT result, IWebView2Environment* env) -> HRESULT {
-
-                // Create a WebView, whose parent is the main window hWnd
-                env->CreateWebView(hWnd, Callback<IWebView2CreateWebViewCompletedHandler>(
-                    [hWnd, url](HRESULT result, IWebView2WebView* webview) -> HRESULT {
-                        if (webview != nullptr)
-                        {
-                            webviewWindow = webview;
-                        }
-
-                        // Add a few settings for the webview
-                        IWebView2Settings* Settings;
-                        webviewWindow->get_Settings(&Settings);
-                        Settings->put_IsScriptEnabled(TRUE);
-                        Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
-                        Settings->put_IsWebMessageEnabled(TRUE);
-
-                        // Resize WebView to fit the bounds of the parent window
-                        RECT bounds;
-                        GetClientRect(hWnd, &bounds);
-                        webviewWindow->put_Bounds(bounds);
-
-                        // Load our html content
-                        webviewWindow->Navigate(url.c_str());
-
-                        return S_OK;
-                    }).Get());
-                return S_OK;
-            }).Get());
+    HWND createButtonHWND = CreateWindow(
+        L"button", L"Create WebView",
+        WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 0,
+        0, 150, m_webviewTop, m_hwndMain,
+        (HMENU)IDE_CREATE, nullptr, 0);
 
     // Main message loop
     MSG msg;
@@ -129,21 +106,86 @@ int CALLBACK WinMain(
     return (int)msg.wParam;
 }
 
+void LayoutWebViews()
+{
+    RECT bounds;
+    GetClientRect(m_hwndMain, &bounds);
+
+    size_t width = (bounds.right - bounds.left) / m_webviewWindows.size() - (m_webviewWindows.size() - 1);
+
+    for (size_t i = 0; i < m_webviewWindows.size(); i++)
+    {
+        RECT win = bounds;
+        win.top = m_webviewTop;
+        win.left = (LONG)(i * width + i * 2);
+        win.right = (LONG)(i * width + width);
+        m_webviewWindows[i]->put_Bounds(win);
+    }
+}
+
+void CreateWebView()
+{
+    std::wstring folder = L"F:\\git\\jalissia\\WebViewExample\\WebViewExample\\";
+    folder.append(std::to_wstring(m_webviewWindows.size()));
+    // Locate the browser and set up the environment for WebView
+    CreateWebView2EnvironmentWithDetails(L"F:\\git\\Edge\\src\\out\\debug_x64", folder.c_str(), nullptr,
+                                         Callback<IWebView2CreateWebView2EnvironmentCompletedHandler>(
+                                             [&](HRESULT result, IWebView2Environment *env) -> HRESULT {
+                                                 // Create a WebView, whose parent is the main window hWnd
+                                                 env->CreateWebView(m_hwndMain, Callback<IWebView2CreateWebViewCompletedHandler>(
+                                                                                    [&](HRESULT result, IWebView2WebView *webview) -> HRESULT {
+                                                                                        if (webview == nullptr)
+                                                                                        {
+                                                                                            return S_OK;
+                                                                                        }
+
+                                                                                        m_webviewWindows.push_back(webview);
+
+                                                                                        // Add a few settings for the webview
+                                                                                        IWebView2Settings *Settings;
+                                                                                        webview->get_Settings(&Settings);
+                                                                                        Settings->put_IsScriptEnabled(TRUE);
+                                                                                        Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
+                                                                                        Settings->put_IsWebMessageEnabled(TRUE);
+
+                                                                                        // Resize WebView to fit the bounds of the parent window
+                                                                                        LayoutWebViews();
+
+                                                                                        // Load our html content
+                                                                                        std::wstring url = m_url;
+                                                                                        url.append(L"?i=");
+                                                                                        url.append(std::to_wstring(m_webviewWindows.size() - 1));
+                                                                                        webview->Navigate(url.c_str());
+
+                                                                                        return S_OK;
+                                                                                    })
+                                                                                    .Get());
+                                                 return S_OK;
+                                             })
+                                             .Get());
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
     case WM_SIZE:
-        if (webviewWindow != nullptr)
+        if (!m_webviewWindows.empty())
         {
-            RECT bounds;
-            GetClientRect(hWnd, &bounds);
-            webviewWindow->put_Bounds(bounds);
+            LayoutWebViews();
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+
+    case WM_COMMAND:
+        if (LOWORD(wParam) == IDE_CREATE)
+        {
+            CreateWebView();
+        }
+        break;
+
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
         break;

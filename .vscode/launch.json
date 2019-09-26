@@ -25,13 +25,16 @@
             "type": "edge",
             "request": "launch",
             "name": "Debug App for Script debugging",
-            "urlFilter": "*index.html",
+            "urlFilter": "*index.html*",
             "webRoot": "${workspaceFolder}",
             "pathMapping": {
                 "/git/jalissia/WebViewExample/out/Debug/x64": "${workspaceFolder}"
             },
             "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
-            "isWebView2": true
+            "env": {
+                "Path": "%path%;F:\\git\\Edge\\src\\out\\debug_x64"
+            },
+            "useWebView": true
         },
     ]
 }

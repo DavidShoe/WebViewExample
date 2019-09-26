@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerEnvironment>WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222
+    <LocalDebuggerEnvironment>WEBVIEW2_WAIT_FOR_SCRIPT_DEBUGGER=true
+WEBVIEW2_PIPE_FOR_SCRIPT_DEBUGGER=pipe1
 PATH=%PATH%;F:\git\Edge\src\out\debug_x64;
 $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
