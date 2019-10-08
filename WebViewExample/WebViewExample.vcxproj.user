@@ -3,7 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerEnvironment>WEBVIEW2_WAIT_FOR_SCRIPT_DEBUGGER=true
 WEBVIEW2_PIPE_FOR_SCRIPT_DEBUGGER=pipe1
-PATH=%PATH%;F:\git\Edge\src\out\debug_x64;
+PATH=%PATH%;D:\edge\src\out\debug_x64;
 $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>

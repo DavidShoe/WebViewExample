@@ -15,13 +15,12 @@
             "environment": [
                 {
                     "name": "path",
-                    "value": "%path%;F:\\git\\Edge\\src\\out\\debug_x64"
+                    "value": "%path%;D:\\edge\\src\\out\\debug_x64"
                 }
             ],
             "externalConsole": false
         },
         {
-            "debugServer": 4712,
             "type": "edge",
             "request": "launch",
             "name": "Debug App for Script debugging",
@@ -32,7 +31,7 @@
             },
             "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "env": {
-                "Path": "%path%;F:\\git\\Edge\\src\\out\\debug_x64"
+                "Path": "%path%;D:\\edge\\src\\out\\debug_x64"
             },
             "useWebView": true
         },

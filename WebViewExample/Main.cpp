@@ -18,6 +18,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE hInst;
 std::vector<ComPtr<IWebView2WebView>> m_webviewWindows;
 HWND m_hwndMain;
+std::wstring m_exe_path;
 std::wstring m_url;
 DWORD IDE_CREATE = 102;
 DWORD m_webviewTop = 25;
@@ -80,6 +81,7 @@ int CALLBACK WinMain(
     std::wstring fullPath(system_buffer, len);
     size_t found = fullPath.find_last_of(L"/\\");
     std::wstring path = fullPath.substr(0, found);
+    m_exe_path = path;
     std::replace(path.begin(), path.end(), L'\\', L'/');
     std::wstring url(L"file:///");
     url += path;
@@ -125,10 +127,11 @@ void LayoutWebViews()
 
 void CreateWebView()
 {
-    std::wstring folder = L"F:\\git\\jalissia\\WebViewExample\\WebViewExample\\";
+    std::wstring folder = m_exe_path;
+    folder.append(L"\\webview_");
     folder.append(std::to_wstring(m_webviewWindows.size()));
     // Locate the browser and set up the environment for WebView
-    CreateWebView2EnvironmentWithDetails(L"F:\\git\\Edge\\src\\out\\debug_x64", folder.c_str(), nullptr,
+    CreateWebView2EnvironmentWithDetails(L"D:\\edge\\src\\out\\debug_x64", folder.c_str(), nullptr,
                                          Callback<IWebView2CreateWebView2EnvironmentCompletedHandler>(
                                              [&](HRESULT result, IWebView2Environment *env) -> HRESULT {
                                                  // Create a WebView, whose parent is the main window hWnd

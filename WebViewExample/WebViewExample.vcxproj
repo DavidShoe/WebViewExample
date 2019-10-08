@@ -31,16 +31,16 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- Fix path so that it points to your nuget package installation -->
-    <WebView2Path>F:\git\jalissia\WebViewExample\packages\Microsoft.Web.WebView2.0.8.270\build\native</WebView2Path>
+    <WebView2Path>D:\jalissia\WebViewExample\packages\Microsoft.Web.WebView2.0.8.270\build\native</WebView2Path>
     <WebView2Include>$(WebView2Path)\include</WebView2Include>
     <WebView2Lib>$(WebView2Path)\$(EdgePlatform)</WebView2Lib>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Uncomment for Edge private build of WebView -->
     <!--
-    <WebView2Include>F:\git\Edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</WebView2Include>
-    <WebView2Lib>F:\git\Edge\src\out\$(Configuration)_$(EdgePlatform)</WebView2Lib>
-     -->
+    <WebView2Include>d:\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</WebView2Include>
+    <WebView2Lib>D:\edge\src\out\$(Configuration)_$(EdgePlatform)</WebView2Lib>
+    -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
