@@ -16,7 +16,7 @@ static wchar_t szTitle[] = L"WebView sample";
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HINSTANCE hInst;
-std::vector<ComPtr<IWebView2WebView>> m_webviewWindows;
+std::vector<ComPtr<ICoreWebView2Host>> m_webviewWindows;
 HWND m_hwndMain;
 std::wstring m_exe_path;
 std::wstring m_url;
@@ -87,6 +87,11 @@ int CALLBACK WinMain(
     url += path;
     url += L"/src/index.html";
     m_url = url;
+    OutputDebugString(L"\r\n");
+    OutputDebugString(m_url.c_str());
+    OutputDebugString(L"\r\n");
+
+    m_url = L"e:/github/webviewexample/webviewexample/src/index.html";
 
     // Create a single WebView within the parent window
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
@@ -131,41 +136,48 @@ void CreateWebView()
     folder.append(L"\\webview_");
     folder.append(std::to_wstring(m_webviewWindows.size()));
     // Locate the browser and set up the environment for WebView
-    CreateWebView2EnvironmentWithDetails(L"D:\\edge\\src\\out\\debug_x64", folder.c_str(), nullptr,
-                                         Callback<IWebView2CreateWebView2EnvironmentCompletedHandler>(
-                                             [&](HRESULT result, IWebView2Environment *env) -> HRESULT {
-                                                 // Create a WebView, whose parent is the main window hWnd
-                                                 env->CreateWebView(m_hwndMain, Callback<IWebView2CreateWebViewCompletedHandler>(
-                                                                                    [&](HRESULT result, IWebView2WebView *webview) -> HRESULT {
-                                                                                        if (webview == nullptr)
-                                                                                        {
-                                                                                            return S_OK;
-                                                                                        }
+    OutputDebugString(L"\r\nFolder: ");
+    OutputDebugString(folder.c_str());
+    OutputDebugString(L"\r\n");
+    HRESULT hr = CreateCoreWebView2EnvironmentWithDetails(L"E:\\ana\\src\\out\\debug_x64", folder.c_str(), nullptr,
+        Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
+            [&](HRESULT result, ICoreWebView2Environment* env) -> HRESULT {
+                // Create a WebView, whose parent is the main window hWnd
+                env->CreateCoreWebView2Host(m_hwndMain, Callback<ICoreWebView2CreateCoreWebView2HostCompletedHandler>(
+                    [&](HRESULT result, ICoreWebView2Host* webview) -> HRESULT {
+                        if (webview == nullptr)
+                        {
+                            return S_OK;
+                        }
 
-                                                                                        m_webviewWindows.push_back(webview);
+                        m_webviewWindows.push_back(webview);
 
-                                                                                        // Add a few settings for the webview
-                                                                                        IWebView2Settings *Settings;
-                                                                                        webview->get_Settings(&Settings);
-                                                                                        Settings->put_IsScriptEnabled(TRUE);
-                                                                                        Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
-                                                                                        Settings->put_IsWebMessageEnabled(TRUE);
+                        // Add a few settings for the webview
+                        ICoreWebView2* cwv2 = nullptr;
+                        ICoreWebView2Settings* Settings;
 
-                                                                                        // Resize WebView to fit the bounds of the parent window
-                                                                                        LayoutWebViews();
+                        webview->get_CoreWebView2(&cwv2);
+                        cwv2->get_Settings(&Settings);
+                        Settings->put_IsScriptEnabled(TRUE);
+                        Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
+                        Settings->put_IsWebMessageEnabled(TRUE);
 
-                                                                                        // Load our html content
-                                                                                        std::wstring url = m_url;
-                                                                                        url.append(L"?i=");
-                                                                                        url.append(std::to_wstring(m_webviewWindows.size() - 1));
-                                                                                        webview->Navigate(url.c_str());
+                        // Resize WebView to fit the bounds of the parent window
+                        LayoutWebViews();
 
-                                                                                        return S_OK;
-                                                                                    })
-                                                                                    .Get());
-                                                 return S_OK;
-                                             })
-                                             .Get());
+                        // Load our html content
+                        std::wstring url = m_url;
+                        url.append(L"?i=");
+                        url.append(std::to_wstring(m_webviewWindows.size() - 1));
+
+                        cwv2->Navigate(url.c_str());
+
+                        return S_OK;
+                    })
+                    .Get());
+                return S_OK;
+            })
+        .Get());
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

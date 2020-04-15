@@ -23,24 +23,24 @@
     <ProjectGuid>{65342093-6549-4BFD-906B-E874F2359EF2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WebViewExample</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup>
-      <EdgePlatform>$(Platform)</EdgePlatform>
-      <EdgePlatform Condition="'$(Platform)'=='Win32'">x86</EdgePlatform>
+    <EdgePlatform>$(Platform)</EdgePlatform>
+    <EdgePlatform Condition="'$(Platform)'=='Win32'">x86</EdgePlatform>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Fix path so that it points to your nuget package installation -->
+    <!--
     <WebView2Path>D:\jalissia\WebViewExample\packages\Microsoft.Web.WebView2.0.8.270\build\native</WebView2Path>
     <WebView2Include>$(WebView2Path)\include</WebView2Include>
     <WebView2Lib>$(WebView2Path)\$(EdgePlatform)</WebView2Lib>
+    -->
   </PropertyGroup>
   <PropertyGroup>
     <!-- Uncomment for Edge private build of WebView -->
-    <!--
-    <WebView2Include>d:\edge\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</WebView2Include>
-    <WebView2Lib>D:\edge\src\out\$(Configuration)_$(EdgePlatform)</WebView2Lib>
-    -->
+    <WebView2Include>e:\ana\src\third_party\win_build_output\midl\edge_embedded_browser\client\win\current\x86\</WebView2Include>
+    <WebView2Lib>e:\ana\src\out\$(Configuration)_$(EdgePlatform)</WebView2Lib>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
@@ -100,10 +100,10 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WebView2Include)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\ana\src\out\debug_x64\gen\edge_embedded_browser\client\win\current</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(WebView2Lib)\WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WebView2Loader.dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(WebView2Lib)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -120,9 +120,8 @@
     <ItemGroup Condition="'$(Configuration)'=='Debug'">
       <WebView2Dependency Include="icuuc.dll" />
     </ItemGroup>
-     <Copy SourceFiles="@(WebView2Dependency->'$(WebView2Lib)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
-     <Copy SourceFiles="@(Content)"
-        DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')"/>
+    <Copy SourceFiles="@(WebView2Dependency->'$(WebView2Lib)\%(Filename)%(Extension)')" DestinationFolder="$(OutputPath)" ContinueOnError="true" />
+    <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(OutputPath)%(RelativeDir)%(Filename)%(Extension)')" />
   </Target>
   <PropertyGroup>
     <IntDir>..\out\$(Configuration)\$(Platform)\Intermediate\$(MSBuildProjectName)\</IntDir>

@@ -8,32 +8,60 @@
             "name": "Debug App for C++ debugging",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "program": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [
                 {
                     "name": "path",
-                    "value": "%path%;D:\\edge\\src\\out\\debug_x64"
+                    // customize for your buid location
+                    "value": "%path%;e://ana//src//out//debug_x64"
                 }
             ],
             "externalConsole": false
         },
         {
+            "name": "Debug App for Script debugging (first)",
             "type": "edge",
+            // "debug.node.useV3": true,
+            // "debug.chrome.useV3": true,
             "request": "launch",
-            "name": "Debug App for Script debugging",
-            "urlFilter": "*index.html*",
-            "webRoot": "${workspaceFolder}",
+            "webRoot": "${workspaceFolder}/webviewexample/src",
             "pathMapping": {
-                "/git/jalissia/WebViewExample/out/Debug/x64": "${workspaceFolder}"
+                "E:/github/WebViewExample": "${workspaceFolder}"
             },
-            "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "env": {
-                "Path": "%path%;D:\\edge\\src\\out\\debug_x64"
+                    // customize for your buid location
+                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
-            "useWebView": true
+             "urlFilter": "*index.html*",
+             "useWebView": true
         },
+        {
+            "name": "Debug App for Script debugging (targeted)",
+            "type": "edge",
+            // "debug.node.useV3": true,
+            // "debug.chrome.useV3": true,
+            "request": "launch",
+            "webRoot": "${workspaceFolder}/webviewexample/src",
+            "pathMapping": {
+                "E:/github/WebViewExample": "${workspaceFolder}"
+            },
+            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "env": {
+                    // customize for your buid location
+                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
+            },
+            //"timeout": 120000,
+             "urlFilter": "*index.html?i=2",
+            "useWebView": "advanced"
+           ,"debugServer": 4712
+
+        }
+
     ]
 }

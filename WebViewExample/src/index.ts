@@ -1,9 +1,11 @@
-import "./styles/app.scss";
-import "./styles/button.scss";
-import "./styles/container.scss";
-import "./styles/list.scss";
+// import "./styles/app.scss";
+// import "./styles/button.scss";
+// import "./styles/container.scss";
+// import "./styles/list.scss";
 
-function onAddClick(e: MouseEvent) {
+ // function onAddClick(e: MouseEvent) {
+function onAddClick() {
+    console.log("onAddClick+");
     const list = document.getElementById('list');
     const index = (list.childElementCount + 1);
     const x = 0;
@@ -29,12 +31,16 @@ function onAddClick(e: MouseEvent) {
 
     item.appendChild(content);
     list.appendChild(item);
+    console.log("onAddClick-");
 }
 
+console.log("inside");
 // Add the event handler as soon as the script loads
-document.getElementById('addButton').addEventListener('click', onAddClick);
+const elem = document.getElementById('addButton');
+elem.addEventListener('click', onAddClick);
 
 // Fill in some items for testing
 for (let i = 0; i < 2; i++) {
-    onAddClick(null);
+    //onAddClick(null);
+    onAddClick();
 }
