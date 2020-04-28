@@ -67,5 +67,7 @@
         "unordered_set": "cpp",
         "xhash": "cpp",
         "xtree": "cpp"
-    }
+    },
+    "debug.node.useV3": true,
+    "debug.chrome.useV3": true,
 }

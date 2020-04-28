@@ -22,10 +22,8 @@
             "externalConsole": false
         },
         {
-            "name": "Debug App for Script debugging (first)",
+            "name": "Debug App for Script debugging (first) (old adapter)",
             "type": "edge",
-            // "debug.node.useV3": true,
-            // "debug.chrome.useV3": true,
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
             "pathMapping": {
@@ -34,17 +32,15 @@
             //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "env": {
-                    // customize for your buid location
+                    // customize for your build location
                     "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
              "urlFilter": "*index.html*",
              "useWebView": true
         },
         {
-            "name": "Debug App for Script debugging (targeted)",
+            "name": "Debug App for Script debugging (targeted) (old adapter)",
             "type": "edge",
-            // "debug.node.useV3": true,
-            // "debug.chrome.useV3": true,
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
             "pathMapping": {
@@ -53,14 +49,33 @@
             //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "env": {
-                    // customize for your buid location
+                    // customize for your build location
                     "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
-            //"timeout": 120000,
              "urlFilter": "*index.html?i=2",
             "useWebView": "advanced"
-           ,"debugServer": 4712
-
+            ,"debugServer": 4712 // only need if your debuging the plugin
+        },
+        {
+            "name": "Debug App for Script debugging (new adapter)",
+            "type": "pwa-msedge",
+            "request": "launch",
+            "webRoot": "${workspaceFolder}/webviewexample/src",
+            "pathMapping": {
+                "E:/github/WebViewExample": "${workspaceFolder}"
+            },
+            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "env": {
+                    // customize for your build location
+                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
+            },
+            
+            //"urlFilter": "about:blank",
+                         "urlFilter": "*index.html?i=2",
+                        "useWebView": "advanced"
+                        //,"trace": true
+             ,"debugServer": 4711 // only need if your debuging the plugin
         }
 
     ]
