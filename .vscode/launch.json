@@ -22,7 +22,7 @@
             "externalConsole": false
         },
         {
-            "name": "Debug App for Script debugging (first) (old adapter)",
+            "name": "Scenario 1: Debug App for Script debugging (first) (old adapter)",
             "type": "edge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
@@ -39,7 +39,7 @@
              "useWebView": true
         },
         {
-            "name": "Debug App for Script debugging (targeted) (old adapter)",
+            "name": "Scenario 2: Debug App for Script debugging (targeted) (old adapter)",
             "type": "edge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
@@ -54,10 +54,31 @@
             },
              "urlFilter": "*index.html?i=2",
             "useWebView": "advanced"
-            ,"debugServer": 4712 // only need if your debuging the plugin
+            //,"debugServer": 4712 // only need if your debuging the plugin
         },
+
         {
-            "name": "Debug App for Script debugging (new adapter)",
+            "name": "Scenario 3: Debug App for Script debugging (first) (new adapter)",
+            "type": "pwa-msedge",
+            "request": "launch",
+            "webRoot": "${workspaceFolder}/webviewexample/src",
+            "pathMapping": {
+                "E:/github/WebViewExample": "${workspaceFolder}"
+            },
+            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "env": {
+                    // customize for your build location
+                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
+            },
+            
+                "urlFilter": "about:blank",
+                        "useWebView": "advanced"
+                        //,"trace": true
+             //,"debugServer": 4711 // only need if your debuging the plugin
+        }
+        {
+            "name": "Scenario 4: Debug App for Script debugging (targeted) (new adapter)",
             "type": "pwa-msedge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
@@ -75,7 +96,7 @@
                          "urlFilter": "*index.html?i=2",
                         "useWebView": "advanced"
                         //,"trace": true
-             ,"debugServer": 4711 // only need if your debuging the plugin
+             //,"debugServer": 4711 // only need if your debuging the plugin
         }
 
     ]
