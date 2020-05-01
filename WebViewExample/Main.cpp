@@ -20,7 +20,7 @@ std::vector<ComPtr<ICoreWebView2Controller>> m_webviewWindows;
 HWND m_hwndMain;
 std::wstring m_exe_path;
 std::wstring m_url;
-DWORD IDE_CREATE = 102;
+HMENU IDE_CREATE = (HMENU)102;
 DWORD m_webviewTop = 25;
 
 int CALLBACK WinMain(
@@ -98,7 +98,7 @@ int CALLBACK WinMain(
         L"button", L"Create WebView",
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 0,
         0, 150, m_webviewTop, m_hwndMain,
-        (HMENU)IDE_CREATE, nullptr, 0);
+        IDE_CREATE, nullptr, 0);
 
     // Main message loop
     MSG msg;
@@ -116,7 +116,10 @@ void LayoutWebViews()
     RECT bounds;
     GetClientRect(m_hwndMain, &bounds);
 
-    size_t width = (bounds.right - bounds.left) / m_webviewWindows.size() - (m_webviewWindows.size() - 1);
+    size_t s = m_webviewWindows.size();
+    size_t w = bounds.right - bounds.left;
+
+    size_t width = (w / s) - (s - 1);
 
     for (size_t i = 0; i < m_webviewWindows.size(); i++)
     {
@@ -198,7 +201,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
 
     case WM_COMMAND:
-        if (LOWORD(wParam) == IDE_CREATE)
+        if (LOWORD(wParam) == LOWORD(IDE_CREATE))
         {
             CreateWebView();
         }

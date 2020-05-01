@@ -56,7 +56,6 @@
             "useWebView": "advanced"
             ,"debugServer": 4712 // only need if your debuging the plugin
         },
-
         {
             "name": "Scenario 3: Debug App for Script debugging (first) (new adapter)",
             "type": "pwa-msedge",
@@ -76,7 +75,7 @@
                         "useWebView": "advanced"
                         //,"trace": true
              //,"debugServer": 4711 // only need if your debuging the plugin
-        }
+        },
         {
             "name": "Scenario 4: Debug App for Script debugging (targeted) (new adapter)",
             "type": "pwa-msedge",
@@ -98,6 +97,5 @@
                         //,"trace": true
              //,"debugServer": 4711 // only need if your debuging the plugin
         }
-
     ]
 }
