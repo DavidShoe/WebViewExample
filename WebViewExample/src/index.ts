@@ -1,9 +1,3 @@
-// import "./styles/app.scss";
-// import "./styles/button.scss";
-// import "./styles/container.scss";
-// import "./styles/list.scss";
-
- // function onAddClick(e: MouseEvent) {
 function onAddClick() {
     console.log("onAddClick+");
     const list = document.getElementById('list');

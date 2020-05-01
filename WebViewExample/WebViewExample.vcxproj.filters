@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="WebSource">
+      <UniqueIdentifier>{5f6a8ca7-61c4-4581-8266-6fdcb105f16a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="src\index.ts">
+      <Filter>WebSource</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="src\index.html">
+      <Filter>WebSource</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+</Project>

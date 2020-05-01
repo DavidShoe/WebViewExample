@@ -9,6 +9,8 @@ This is a test bed application for exercising the two javascript debugger plugin
     Build the webviewexample.exe
 
     You are now down with Visual Studio
+## Missing DLL Depencency
+Copy icuuc.dll from your ana\src\out\debug_x64 directory to webviewexample\out\debug\x64\webviewexample this will fix a runtime dependency error resulting in a "webview2loader.dll was not found error".
 
 ## Visual Code setup
 ### Update the launch.json

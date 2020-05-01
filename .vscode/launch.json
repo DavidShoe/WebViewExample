@@ -54,7 +54,7 @@
             },
              "urlFilter": "*index.html?i=2",
             "useWebView": "advanced"
-            //,"debugServer": 4712 // only need if your debuging the plugin
+            ,"debugServer": 4712 // only need if your debuging the plugin
         },
 
         {

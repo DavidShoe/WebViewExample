@@ -16,7 +16,7 @@ static wchar_t szTitle[] = L"WebView sample";
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HINSTANCE hInst;
-std::vector<ComPtr<ICoreWebView2Host>> m_webviewWindows;
+std::vector<ComPtr<ICoreWebView2Controller>> m_webviewWindows;
 HWND m_hwndMain;
 std::wstring m_exe_path;
 std::wstring m_url;
@@ -85,13 +85,11 @@ int CALLBACK WinMain(
     std::replace(path.begin(), path.end(), L'\\', L'/');
     std::wstring url(L"file:///");
     url += path;
-    url += L"/src/index.html";
+    url += L"/index.html";
     m_url = url;
     OutputDebugString(L"\r\n");
     OutputDebugString(m_url.c_str());
     OutputDebugString(L"\r\n");
-
-    m_url = L"e:/github/webviewexample/webviewexample/src/index.html";
 
     // Create a single WebView within the parent window
     SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
@@ -139,43 +137,48 @@ void CreateWebView()
     OutputDebugString(L"\r\nFolder: ");
     OutputDebugString(folder.c_str());
     OutputDebugString(L"\r\n");
-    HRESULT hr = CreateCoreWebView2EnvironmentWithDetails(L"E:\\ana\\src\\out\\debug_x64", folder.c_str(), nullptr,
+
+    HRESULT hr = CreateCoreWebView2EnvironmentWithOptions(
+        L"E:\\ana\\src\\out\\debug_x64",        // Browser folder
+        folder.c_str(),                         // User environment folder
+        nullptr,                                // Options
         Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
             [&](HRESULT result, ICoreWebView2Environment* env) -> HRESULT {
                 // Create a WebView, whose parent is the main window hWnd
-                env->CreateCoreWebView2Host(m_hwndMain, Callback<ICoreWebView2CreateCoreWebView2HostCompletedHandler>(
-                    [&](HRESULT result, ICoreWebView2Host* webview) -> HRESULT {
+                result = env->CreateCoreWebView2Controller(m_hwndMain, Callback<ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
+                    [&](HRESULT result, ICoreWebView2Controller* webview) -> HRESULT {
                         if (webview == nullptr)
                         {
-                            return S_OK;
+                            result = E_FAIL;
                         }
+                        else
+                        {
+                            m_webviewWindows.push_back(webview);
 
-                        m_webviewWindows.push_back(webview);
+                            // Add a few settings for the webview
+                            ICoreWebView2* cwv2 = nullptr;
+                            ICoreWebView2Settings* Settings;
 
-                        // Add a few settings for the webview
-                        ICoreWebView2* cwv2 = nullptr;
-                        ICoreWebView2Settings* Settings;
+                            webview->get_CoreWebView2(&cwv2);
+                            cwv2->get_Settings(&Settings);
+                            Settings->put_IsScriptEnabled(TRUE);
+                            Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
+                            Settings->put_IsWebMessageEnabled(TRUE);
 
-                        webview->get_CoreWebView2(&cwv2);
-                        cwv2->get_Settings(&Settings);
-                        Settings->put_IsScriptEnabled(TRUE);
-                        Settings->put_AreDefaultScriptDialogsEnabled(TRUE);
-                        Settings->put_IsWebMessageEnabled(TRUE);
+                            // Resize WebView to fit the bounds of the parent window
+                            LayoutWebViews();
 
-                        // Resize WebView to fit the bounds of the parent window
-                        LayoutWebViews();
+                            // Load our html content
+                            std::wstring url = m_url;
+                            url.append(L"?i=");
+                            url.append(std::to_wstring(m_webviewWindows.size() - 1));
 
-                        // Load our html content
-                        std::wstring url = m_url;
-                        url.append(L"?i=");
-                        url.append(std::to_wstring(m_webviewWindows.size() - 1));
-
-                        cwv2->Navigate(url.c_str());
-
-                        return S_OK;
+                            result = cwv2->Navigate(url.c_str());
+                        }
+                        return result;
                     })
                     .Get());
-                return S_OK;
+                return result;
             })
         .Get());
 }
