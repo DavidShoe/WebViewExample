@@ -1,12 +1,11 @@
 
 #include <windows.h>
-#include <stdlib.h>
 #include <string>
-#include <tchar.h>
 #include <wrl.h>
 #include <algorithm>
 #include <vector>
 #include "WebView2.h"
+#include "WebView2EnvironmentOptions.h"
 
 using namespace Microsoft::WRL;
 
@@ -133,6 +132,7 @@ void LayoutWebViews()
 
 void CreateWebView()
 {
+    HRESULT hr  E_FAIL;
     std::wstring folder = m_exe_path;
     folder.append(L"\\webview_");
     folder.append(std::to_wstring(m_webviewWindows.size()));
@@ -141,10 +141,18 @@ void CreateWebView()
     OutputDebugString(folder.c_str());
     OutputDebugString(L"\r\n");
 
-    HRESULT hr = CreateCoreWebView2EnvironmentWithOptions(
-        L"E:\\ana\\src\\out\\debug_x64",        // Browser folder
+    auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
+
+    bool debugPortOn = false;
+    if (debugPortOn)
+    {
+        options->put_AdditionalBrowserArguments(L"--remote-debugging-port=9222");
+    }
+
+    hr = CreateCoreWebView2EnvironmentWithOptions(
+        L"E:\\ana\\src\\out\\debug_x64",        // Browser executable folder
         folder.c_str(),                         // User environment folder
-        nullptr,                                // Options
+        options.Get(),                          // Options
         Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
             [&](HRESULT result, ICoreWebView2Environment* env) -> HRESULT {
                 // Create a WebView, whose parent is the main window hWnd
