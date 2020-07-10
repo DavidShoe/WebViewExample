@@ -4,18 +4,8 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "Attach to process",
-            "port": 9222,
-            "request": "attach",
-            "type": "pwa-msedge",
-            "webRoot": "${workspaceFolder}",
-            "timeout": 10000,
-            "useWebView": true
-        },
-        {
-            "name": "Debug App for C++ debugging",
+            "name": "Scenario 0: C++ debug test application",
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
@@ -44,7 +34,7 @@
             //  "trace": "verbose"
         },
         {
-            "name": "Scenario 2: Script debugging (targeted) (old adapter)",
+            "name": "Scenario 2: Script debugging (targeted=*index.html?i=1) (old adapter)",
             "type": "edge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
@@ -53,11 +43,20 @@
                     // customize if needed
                     "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
-             "urlFilter": "*index.html?i=2",
+             "urlFilter": "*index.html?i=1",
             "useWebView": "advanced"
         },
         {
-            "name": "Scenario 3: Script debugging (first) (new adapter)",
+            "name": "Scenario 3: Attach to runing application on port 9223 (old adapter)",
+            "type": "edge",
+            "request": "attach",
+            "port": 9223,
+            "useWebView": true,
+            "timeout":10000
+        },
+
+        {
+            "name": "Scenario 4: Script debugging (first) (new adapter)",
             "type": "pwa-msedge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
@@ -69,169 +68,50 @@
                     // customize for your build location
                     "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
-            
+            "useWebView": true,
+        },
+        {
+            "name": "Scenario 5a: Debug App for Script debugging (targeted=about:blank) (new adapter)",
+            "type": "pwa-msedge",
+            "request": "launch",
+            "webRoot": "${workspaceFolder}/webviewexample/src",
+            "pathMapping": {
+                "E:/github/WebViewExample": "${workspaceFolder}"
+            },
+            "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "env": {
+                // customize for your build location
+                "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
+            },
             "urlFilter": "about:blank",
             "useWebView": "advanced"
+
         },
         {
-            "name": "Scenario 4: Debug App for Script debugging (targeted) (new adapter)",
+            "name": "Scenario 5b: Debug App for Script debugging (targeted=*index.html?i=1) (new adapter)",
             "type": "pwa-msedge",
             "request": "launch",
             "webRoot": "${workspaceFolder}/webviewexample/src",
             "pathMapping": {
                 "E:/github/WebViewExample": "${workspaceFolder}"
             },
-            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
-            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
+            "runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
             "env": {
-                    // customize for your build location
-                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
+                // customize for your build location
+                "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
             },
-                         "urlFilter": "*index.html?i=2",
-                        "useWebView": "advanced"
-
+            "urlFilter": "*index.html?i=2",
+            "useWebView": "advanced"
 
         },
         {
-            "name": "Test targeted",
-            "type": "edge",
-            "request": "launch",
-            "pathMapping": {
-                "E:/github/WebViewExample": "${workspaceFolder}"
-            },
-            "runtimeExecutable": "E:/github/WebView2Sample/WebView2APISample/Release/x64/WebView2APISample.exe",
-            "env": {
-                    // customize for your build location
-                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebView2Sample/WebView2APISample/Release/x64/"
-            },
-             "urlFilter": "*ScenarioJavaScriptDebugIndex*",
-            "useWebView": "advanced"
+            "name": "Scenario 6: Attach to runing application on port 9223 (new adapter)",
+            "type": "pwa-msedge",
+            "request": "attach",
+            "port": 9223,
+            "useWebView": true,
+            "timeout":10000
         },
-
-        {
-            "name": "Diana",
-            "type": "edge",
-            "request": "launch",
-            "runtimeExecutable": "e:/ana/src/out/debug_x64/WebView2APISample.exe",
-            "pathMapping": {
-              "D:/Edge/src/out/debug_x64": "${workspaceFolder}"
-            },
-            "env": {
-                    // customize for your build location
-                    "Path": "%path%;${workspaceFolder}/x64/Debug;e:/ana/src/out/debug_x64"
-            },
-            "urlFilter": "*ScenarioJavaScriptDebugIndex*",
-            "useWebView": "advanced"
-          },
-          {
-            "name": "Scenario 3x: Debug App for Script debugging (first) (new adapter)",
-            "type": "pwa-msedge",
-            "request": "launch",
-            "webRoot": "${workspaceFolder}/webviewexample/src",
-            "pathMapping": {
-                "E:/github/WebViewExample": "${workspaceFolder}"
-            },
-            //"runtimeExecutable": "${workspaceFolder}/out/Debug/x64/WebViewExample/WebViewExample.exe",
-            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
-            "env": {
-                    // customize for your build location
-                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-            },
-            
-                "urlFilter": "about:blank",
-                        "useWebView": "advanced"
-                        //,"trace": true
-             //,"debugServer": 4711 // only need if your debuging the plugin
-            },
-          {
-            "name": "JavaScript Debugger(Nightly): Sample app-Targeted (Script Release|x64)",
-            "type": "pwa-msedge",
-            "request": "launch",
-            "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
-            "env": {
-                    // customize for your build location
-                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-                },
-            "urlFilter": "about:blank",
-            "useWebView": "advanced"
-            },
-            {
-                "name": "JavaScript Debugger(Nightly): Sample app - First",
-                "type": "pwa-msedge",
-                "request": "launch",
-                //"cwd": "${workspaceFolder}",
-                "runtimeExecutable": "E:/ana/src/out/debug_x64/WebView2APISample.exe",
-
-                "env": {
-                    "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebView2Sample/WebView2APISample/Release/x64/"
-//                        "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-                },
-                "useWebView": true,
-                "trace":true
-
-            },
-            {
-                "name": "Scenario 1: Script debugging (first) (old adapter)",
-                "type": "edge",
-                "request": "launch",
-                "runtimeExecutable": "E:/github/WebView2Sample/WebView2APISample/Release/x64/WebView2APISample.exe",
-                "env": {
-                        // customize for your build location if needed
-                        "Path": "%path%;e://ana//src//out//debug_x64; "
-                },
-                    "useWebView": true
-            },
-            {
-                "name": "Scenario 2: Script debugging (first) (new adapter)",
-                "type": "pwa-msedge",
-                "request": "launch",
-                "runtimeExecutable": "E:/github/WebView2Sample/WebView2APISample/Release/x64/WebView2APISample.exe",
-                "env": {
-                        // customize for your build location if needed
-                        "Path": "%path%;e://ana//src//out//debug_x64; "
-                },
-                 "useWebView": true
-            },
-
-            {
-                "name": "Test about:blank",
-                "type": "pwa-msedge",
-                "request": "launch",
-                "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
-                "env": {
-                        // customize for your build location
-                        "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-                    },
-                "urlFilter": "about:blank",
-                "useWebView": "advanced"
-                },
-                {
-                    "name": "Test *index.html?i=1",
-                    "type": "edge",
-                    "request": "launch",
-                    "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
-                    "env": {
-                            // customize for your build location
-                            "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-                        },
-                    "urlFilter": "*index.html?i=1",
-                    "useWebView": "advanced"
-                    },
-                    {
-                        "name": "Test *index.html?i=1*",
-                        "type": "pwa-msedge",
-                        "request": "launch",
-                        "runtimeExecutable": "E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample.exe",
-                        "env": {
-                                // customize for your build location
-                                "Path": "%path%;e://ana//src//out//debug_x64;E:/github/WebViewExample/out/Debug/x64/WebViewExample/WebViewExample"
-                            },
-                        "urlFilter": "*index.html?i=1*",
-                        "useWebView": "advanced"
-                    },
-    
-        
-            
 ]
 }
 

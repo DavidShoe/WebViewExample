@@ -23,6 +23,9 @@ Copy icuuc.dll from your ana\src\out\debug_x64 directory to webviewexample\out\d
  Install the new debug adapter: "JavaScript Debugger" 
 
 ## Usage
+Scenario 0 is c++ debugging of the test application
+Scenarios 1-3 are using the old debug adapter
+Scenarios 4-6 are using the new debug adapter
 ### Scenario 1
     To Test basic debugger functionality of the old debugger add in.  This will attach to the first webview created.
 ### Scenario 2

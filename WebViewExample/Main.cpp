@@ -141,9 +141,8 @@ void CreateWebView()
     OutputDebugString(folder.c_str());
     OutputDebugString(L"\r\n");
 
-    auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
-
     bool debugPortOn = false;
+    auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
     if (debugPortOn)
     {
         options->put_AdditionalBrowserArguments(L"--remote-debugging-port=9222");
